@@ -8,7 +8,7 @@
     "test": "mocha \"src/**/*.test.js\" --check-leaks",
     "testw": "mocha \"src/**/*.test.js\" --check-leaks --watch",
     "build": "webpack --config webpack.config.js",
-    "prepublishOnly": "build"
+    "prepublishOnly": "npm run lint && npm run test && npm run build"
   },
   "files": ["dist/**/*"],
   "repository": {
