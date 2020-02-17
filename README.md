@@ -32,7 +32,7 @@ const VsmJsonPretty = require('vsm-json-pretty')
 
 ### Browsers
 ```html
-<script src="https://unpkg.com/vsm-json-pretty@^1.0.0/dist/index.min.js"></script>
+<script src="https://unpkg.com/vsm-json-pretty@^1.0.0/dist/vsm-json-pretty.min.js"></script>
 ```
 
 This will create a global variable `VsmJsonPretty`.
