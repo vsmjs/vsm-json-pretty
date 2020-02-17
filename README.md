@@ -4,7 +4,7 @@
 
 ## Specification
 
-This is a function that converts VSM-JSON (as a JSON-String or JS-Object)
+This is a function that converts VSM-JSON (given as a JSON-String or JS-Object)
 into a pretty, compact, readable JSON5-String.
 
 It builds on the package
@@ -39,6 +39,15 @@ This will create a global variable `VsmJsonPretty`.
 
 
 
+## Use
+
+Call the function with these arguments:
+- `vsm` {String|Object}:
+  the VSM data as a JSON-String or JS-Object.
+- `options` {Object} (optional):
+  options that will be passed on to `json-stringify-pretty-compact`.
+
+
 ## Example
 ```js
 var vsm = {
@@ -54,10 +63,10 @@ var vsm = {
 
 var str  = VsmJsonPretty(vsm);
 var str2 = VsmJsonPretty(JSON.stringify(vsm));
-console.log(str);
-console.log(str2);
+var str3 = VsmJsonPretty(vsm, { maxLength: 80 });
+console.log(str, str2, str3);
 
-/* Both output the same:
+/* All output the same:
 { terms: [
     { str: 'subj', classID: null, instID: null },
     { str: 'rel', classID: null, instID: null },

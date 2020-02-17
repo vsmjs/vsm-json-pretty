@@ -2,16 +2,17 @@ const stringifyPrettyCompact = require('json-stringify-pretty-compact');
 
 
 
-module.exports = function vsmJsonPretty(strOrObj) {
+module.exports = function vsmJsonPretty(vsm, options) {
 
   try {  // If given a JSON-String then convert it to a JS-Object first.
-    var obj = typeof strOrObj == 'string' ? JSON.parse(strOrObj) : strOrObj;
-    if (!obj)  return null;
+    var vsmObj = typeof vsm == 'string' ? JSON.parse(vsm) : vsm;
+    if (!vsmObj)  return null;
   }
   catch(err)  { return null; }
 
+  var opt = Object.assign({}, options, { margins: true });
 
-  return stringifyPrettyCompact(obj, { margins: true })
+  return stringifyPrettyCompact(vsmObj, opt)
     .replace(/ "([a-zA-Z]*)": /g, ' $1: ')
     .replace(/{\n {2}terms:/    , '{ terms:')
     .replace(/, conns:/         , ',\n  conns:')

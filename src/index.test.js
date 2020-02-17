@@ -23,7 +23,7 @@ describe('vsmJsonPretty()', function() {
 
 
   it('converts an example with little term-data, and given as a JS-Object', () => {
-    var input = {
+    var inputObj = {
       terms: [
         { str: 'subj', classID: null, instID: null },
         { str: 'rel',  classID: null, instID: null },
@@ -34,8 +34,7 @@ describe('vsmJsonPretty()', function() {
       ]
     };
 
-    // This defines the String-output:
-    var output = outdentBlock(`
+    var outputStr = outdentBlock(`
       { terms: [
           { str: 'subj', classID: null, instID: null },
           { str: 'rel', classID: null, instID: null },
@@ -45,13 +44,13 @@ describe('vsmJsonPretty()', function() {
       }
     `);
 
-    vsmJsonPretty(input).should.equal(output);
+    vsmJsonPretty(inputObj).should.equal(outputStr);
   });
 
 
 
   it('converts an example with more term-data, and given as a JSON-String', () => {
-    var input = {
+    var inputStr = JSON.stringify({
       terms: [
         { str: 'subj', classID: 'http://ont.ex/Subj', instID: 'http://db.ex/00', descr: 'abc' },
         { str: 'rel',  classID: 'http://ont.ex/Rel',  instID: 'http://db.ex/01' },
@@ -60,10 +59,9 @@ describe('vsmJsonPretty()', function() {
       conns: [
         { type: 'T', pos: [ 0, 1, 2 ] }
       ]
-    };
+    });
 
-    // This defines the String-output:
-    var output = outdentBlock(`
+    var outputStr = outdentBlock(`
       { terms: [
           { str: 'subj',
             classID: 'http://ont.ex/Subj',
@@ -83,8 +81,46 @@ describe('vsmJsonPretty()', function() {
       }
     `);
 
-    input = JSON.stringify(input);  // For this test, stringify the input.
-    vsmJsonPretty(input).should.equal(output);
+    vsmJsonPretty(inputStr).should.equal(outputStr);
+  });
+
+
+
+  it('uses options.maxLength', () => {
+    var inputObj = {
+      terms: [
+        { str: 'subj', classID: null, instID: null },
+        { str: 'rel',  classID: null, instID: null }
+      ],
+      conns: [ ]
+    };
+
+    var outputStr = outdentBlock(`
+      { terms: [
+          { str: 'subj', classID: null, instID: null },
+          { str: 'rel', classID: null, instID: null }
+        ],
+        conns: [  ]
+      }
+    `);
+
+    var outputStr2 = outdentBlock(`
+      { terms: [
+          { str: 'subj',
+            classID: null,
+            instID: null
+          },
+          { str: 'rel',
+            classID: null,
+            instID: null
+          }
+        ],
+        conns: [  ]
+      }
+    `);
+
+    vsmJsonPretty(inputObj                   ).should.equal(outputStr);
+    vsmJsonPretty(inputObj, { maxLength: 40 }).should.equal(outputStr2);
   });
 
 });
