@@ -27,17 +27,23 @@ module.exports = function vsmJsonPretty(vsm, options) {
       .replace(/(: \[|\],) ?\[/g      , '$1\n    [');
   }
   else {
+    // Quick compactness tweaks. Could be improved with a more general approach.
     str = JSON.stringify(vsmObj, null, 2)
-      .replace(/{\n\s+("(terms": \[|.+[^{[])\n)/g, '{ $1')
+      .replace(/{\n\s+("terms": \[\n|"queryOptions": {\n|".+[^{[]\n)/g, '{ $1')
       .replace(/(\n\s+) {2}([}\]]+)\n\s+([}\]]+)/g, '$1$2$3')
       .replace(/(\n\s+) {4}([}\]]{2})\n\s+([}\]]+)/g, '$1$2$3')
       .replace(/\n\s+( "pos": \[)\n\s+/g, '$1 ')
       .replace(/\n\s+( \d+[,\n])/g, '$1')
       .replace(/("pos": \[.+)\n\s+/g, '$1 ')
-      .replace(/({ "str")(:.+\n)/g, '$1    $2')
-      .replace(/("instID")(:.+\n)/g, '$1 $2')
-      .replace(/("dictID")(:.+\n)/g, '$1 $2')
-      .replace(/("descr")(:.+\n)/g, '$1  $2');
+      .replace(/(\d \])(}[,\n])/g, '$1 $2')
+      .replace(/("filter": {)([^\n])/g, '$1\n         $2')
+      .replace(/("dictID": \[[^\]]*\s+)(\])/g, '$1    $2')
+      .replace(/(\n {4}[ {] "str")(:.+\n)/g, '$1    $2')
+      .replace(/(\n {4}[ {] "instID")(:.+\n)/g, '$1 $2')
+      .replace(/(\n {4}[ {] "dictID")(:.+\n)/g, '$1 $2')
+      .replace(/(\n {4}[ {] "descr")(:.+\n)/g, '$1  $2')
+      .replace(/(\n {4}[ {] "placeholder")(:.+\n)/g, '$1$2')
+      .replace(/(\n {4}[ {] "tag")(:.+\n)/g, '$1        $2');
   }
 
   return str;
