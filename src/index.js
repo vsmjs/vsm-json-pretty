@@ -32,7 +32,7 @@ module.exports = function vsmJsonPretty(vsm, options) {
       .replace(/(\n\s+) {2}([}\]]+)\n\s+([}\]]+)/g, '$1$2$3')
       .replace(/(\n\s+) {4}([}\]]{2})\n\s+([}\]]+)/g, '$1$2$3')
       .replace(/\n\s+( "pos": \[)\n\s+/g, '$1 ')
-      .replace(/\n\s+( \d[,\n])/g, '$1')
+      .replace(/\n\s+( \d+[,\n])/g, '$1')
       .replace(/("pos": \[.+)\n\s+/g, '$1 ')
       .replace(/({ "str")(:.+\n)/g, '$1    $2')
       .replace(/("instID")(:.+\n)/g, '$1 $2')
