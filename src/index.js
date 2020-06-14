@@ -15,16 +15,16 @@ module.exports = function vsmJsonPretty(vsm, options) {
   if (options.json5) {
     options = Object.assign(options, { margins: true });
     var str = stringifyPrettyCompact(vsmObj, options)
-      .replace(/ "([a-zA-Z]+)": /g, ' $1: ')
-      .replace(/{\n {2}terms:/    , '{ terms:')
-      .replace(/, conns:/         , ',\n  conns:')
-      .replace(/'/g               , '\\\'')
-      .replace(/"/g               , '\'')
-      .replace(/\n {4}{\n {6}/g   , '\n    { ')
-      .replace(/\n {6,10}([\]}],?\n)/g, ' $1')
-      .replace(/] }$/                 , ']\n}')
-      .replace(/] ?]\n}$/             , ']\n  ]\n}')
-      .replace(/(: \[|\],) ?\[/g      , '$1\n    [');
+      .replace(/ "([a-zA-Z]+)": /g, ' $1: ')     // Unquote property-keys.
+      .replace(/{\n {2}terms:/  , '{ terms:')    // Merge first two lines.
+      .replace(/, conns:/       , ',\n  conns:') // 'conns:' always on new line.
+      .replace(/'/g             , '\\\'')
+      .replace(/"/g             , '\'')          // Un-doublequote keys.
+      .replace(/\n {4}{\n {6}/g , '\n    { ')    // Less spacious Terms.
+      .replace(/\n {6,10}([\]}],?\n)/g, ' $1')   // Compactify `queryOptions`.
+      .replace(/] }$/           , ']\n}')        // Last '}' always on new line.
+      .replace(/] ?]\n}$/       , ']\n  ]\n}')   // TheConns ']' on new line.
+      .replace(/(: \[|\],) ?\[/g, '$1\n    [');  // Each Conn on its own line.
   }
   else {
     // Quick compactness tweaks. Could be improved with a more general approach.
