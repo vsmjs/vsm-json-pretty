@@ -13,14 +13,14 @@
   "files": ["dist/**/*"],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vsmjs/vsm-json-pretty.git"
+    "url": "git+https://github.com/vsm/vsm-json-pretty.git"
   },
   "author": "Steven Vercruysse (http://stcruy.com)",
   "license": "AGPL-3.0",
   "bugs": {
-    "url": "https://github.com/vsmjs/vsm-json-pretty/issues"
+    "url": "https://github.com/vsm/vsm-json-pretty/issues"
   },
-  "homepage": "https://github.com/vsmjs/vsm-json-pretty#readme",
+  "homepage": "https://github.com/vsm/vsm-json-pretty#readme",
   "devDependencies": {
     "@babel/core": "^7.7.2",
     "@babel/preset-env": "^7.7.1",
